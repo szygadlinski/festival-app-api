@@ -14,6 +14,19 @@ const db = [
   { id: 6, author: 'Ralph Smith', text: 'They really know how to make you happy.' },
 ];
 
+app.get('/testimonials', (req, res) => {
+  res.json(db);
+});
+
+app.get('/testimonials/random', (req, res) => {
+  res.json(db[Math.floor(Math.random() * db.length)]);
+});
+
+app.get('/testimonials/:id', (req, res) => {
+  res.json(db[req.params.id - 1]);
+});
+
+
 app.listen(7000, () => {
   console.log('Server is running on port 7000: http://localhost:7000');
 });
