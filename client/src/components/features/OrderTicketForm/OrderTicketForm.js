@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/anchor-is-valid: 'off' */
+
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Row, Col, Alert, Progress } from 'reactstrap';
 

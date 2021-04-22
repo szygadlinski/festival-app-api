@@ -22,18 +22,23 @@ router.route('/seats/:id').get((req, res) => {
 
 router.route('/seats').post((req, res) => {
   const { day, seat, client, email } = req.body;
+  const element = db.seats.find(element => (element.day == day) && (element.seat == seat));
 
-  if(day && seat && client && email){
-    db.seats.push({
-      id: uuidv4(),
-      day,
-      seat,
-      client,
-      email,
-    });
-    res.json({ message: 'OK' });
+  if(element){
+    res.status(409).json({ message: 'The slot is already taken...' });
   } else {
-    res.status(404).json({ message: 'Youe can\'t leave any fields empty!' });
+    if(day && seat && client && email){
+      db.seats.push({
+        id: uuidv4(),
+        day,
+        seat,
+        client,
+        email,
+      });
+      res.json({ message: 'OK' });
+    } else {
+      res.status(404).json({ message: 'You can\'t leave any fields empty!' });
+    }
   }
 });
 
