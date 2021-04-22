@@ -18,7 +18,7 @@ const items = [
   {
     src: '/img/promo/promo3.jpg',
     altText: 'Meet stars!',
-    caption: 'Meet the biggest music starts live!',
+    caption: 'Meet the biggest music stars live!',
     header: 'Meet stars!',
   }
 ];
