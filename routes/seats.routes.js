@@ -36,6 +36,7 @@ router.route('/seats').post((req, res) => {
         email,
       });
       res.json({ message: 'OK' });
+      req.io.emit('seatsUpdated', db.seats, console.log('Seats updated!'));
     } else {
       res.status(404).json({ message: 'You can\'t leave any fields empty!' });
     }

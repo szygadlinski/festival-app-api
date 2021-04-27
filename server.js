@@ -18,6 +18,12 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
@@ -36,6 +42,4 @@ const server = app.listen(process.env.PORT || 7000, () => {
 
 const io = socket(server);
 
-io.on('connection', socket => {
-  console.log('New socket!');
-});
+io.on('connection', () => console.log('New socket!'));
