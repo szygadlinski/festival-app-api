@@ -32,18 +32,17 @@ class SeatChooser extends React.Component {
 
 
     if(seatId === chosenSeat) return <Button key={seatId} className="seats__seat" color="primary">{seatId}</Button>;
-    else if(isTaken(seatId)) {
-      this.countTaken++;
-      return <Button key={seatId} className="seats__seat seats__taken" disabled color="secondary">{seatId}</Button>;
-    }
+    else if(isTaken(seatId)) return <Button key={seatId} className="seats__seat" disabled color="secondary">{seatId}</Button>;
     else return <Button key={seatId} color="primary" className="seats__seat" outline onClick={(e) => updateSeat(e, seatId)}>{seatId}</Button>;
   }
 
   render() {
 
     const { prepareSeat } = this;
-    const { requests } = this.props;
-
+    const { requests, chosenDay, seats } = this.props;
+    
+    this.countTaken = seats.filter(seat => seat.day === chosenDay).length;
+    
     return (
       <div>
         <h3>Pick a seat</h3>
