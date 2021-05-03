@@ -1,75 +1,101 @@
 /* eslint eqeqeq: 'off' */
 
 const express = require('express');
+const Testimonial = require('../models/testimonial.model');
+
 const router = express.Router();
 
-const { v4: uuidv4 } = require('uuid');
-const db = require('../db');
-
-router.route('/testimonials').get((req, res) => {
-  res.json(db.testimonials);
-});
-
-router.route('/testimonials/random').get((req, res) => {
-  res.json(db.testimonials[Math.floor(Math.random() * db.length)]);
-});
-
-router.route('/testimonials/:id').get((req, res) => {
-  const element = db.testimonials.find(element => element.id == req.params.id);
-
-  if(element){
-    res.json(element);
-  } else {
-    res.status(404).json({ message: 'You have to provide correct ID!' });
+router.get('/testimonials', async (req, res) => {
+  try {
+    res.json(await Testimonial.find());
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
   }
 });
 
-router.route('/testimonials').post((req, res) => {
-  const { author, text } = req.body;
-
-  if(author && text){
-    db.testimonials.push({
-      id: uuidv4(),
-      author,
-      text,
-    });
-    res.json({ message: 'OK' });
-  } else {
-    res.status(404).json({ message: 'You can\'t leave any fields empty!' });
-  }
-});
-
-router.route('/testimonials/:id').put((req, res) => {
-  const element = db.testimonials.find(element => element.id == req.params.id);
-  const { author, text } = req.body;
-
-  if(element){
-    if(author && text){
-      element.author = author;
-      element.text = text;
-      res.json({ message: 'OK' });
+router.get('/testimonials/random', async (req, res) => {
+  try {
+    const count = Testimonial.countDocuments();
+    const rand = Math.floor(Math.random() * count);
+    const test = await Testimonial.findOne().skip(rand);
+    if(!test) {
+      res.status(404).json({ message: 'Not found' });
     } else {
-      res.status(404).json({ message: 'You can\'t leave any fields empty!' });
+      res.json(test);
     }
-  } else {
-    res.status(404).json({ message: 'You have to provide correct ID!' });
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
   }
 });
 
-router.route('/testimonials/:id').delete((req, res) => {
-  const element = db.testimonials.find(element => element.id == req.params.id);
-
-  if(element){
-    const newTestimonials = [];
-    for(let testimonial of db.testimonials){
-      if(testimonial.id != req.params.id){
-        newTestimonials.push(testimonial);
-      }
+router.get('/testimonials/:id', async (req, res) => {
+  try {
+    const test = await Testimonial.findById(req.params.id);
+    if(!test) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(test);
     }
-    db.testimonials = newTestimonials;
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
+});
+
+router.post('/testimonials', async (req, res) => {
+  try {
+    const { author, text } = req.body;
+    const newTestimonial = new Testimonial({
+      author: author,
+      text: text,
+    });
+    await newTestimonial.save();
     res.json({ message: 'OK' });
-  } else {
-    res.status(404).json({ message: 'You have to provide correct ID!' });
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
+});
+
+router.put('/testimonials/:id', async (req, res) => {
+  try {
+    const test = await Testimonial.findById(req.params.id);
+    if(!test) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      const { author, text } = req.body;
+      await Testimonial.updateOne({ _id: req.params.id }, { $set: {
+        author: author,
+        text: text,
+      }});
+      res.json({ 
+        message: 'OK',
+        updatedTestimonial: await Testimonial.findById(req.params.id),
+      });
+    }
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
+  }
+});
+
+router.delete('/testimonials/:id', async (req, res) => {
+  try {
+    const test = await Testimonial.findById(req.params.id);
+    if(!test) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      await Testimonial.deleteOne({ _id: req.params.id });
+      res.json({ 
+        message: 'OK',
+        deletedTestimonial: await test,
+      });
+    }
+  }
+  catch(err) {
+    res.status(500).json({ message: err });
   }
 });
 
