@@ -37,7 +37,7 @@ app.use((req, res) => {
   res.status(404).json({ message: '404 - Page not found.' });
 });
 
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://szymon-zygadlinski:I60GoK50k5feQ1M0@simple-api.ooy31.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => console.log('Successfully connected to the database!'));

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { modelName } = require('../../company-app/models/employee.model');
 
 const concertSchema = new mongoose.Schema({
   performer: { type: String, required: true },
