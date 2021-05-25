@@ -6,13 +6,19 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon server.js",
-    "build": "cd client && yarn install && yarn build"
+    "build": "cd client && yarn install && yarn build",
+    "test": "set NODE_ENV=test && mocha \"./tests/**/*.test.js\"",
+    "test:watch": "onchange \"./**/*.js\" -i -k -- yarn test"
   },
   "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mocha": "^8.4.0",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.7",
+    "onchange": "^7.1.0",
     "socket.io": "^4.0.1",
     "uuid": "^8.3.2"
   },

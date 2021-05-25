@@ -37,17 +37,22 @@ app.use((req, res) => {
   res.status(404).json({ message: '404 - Page not found.' });
 });
 
-mongoose.connect('mongodb+srv://szymon-zygadlinski:I60GoK50k5feQ1M0@simple-api.ooy31.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
+const dbURI = process.env.NODE_ENV === 'production' 
+  ? 'mongodb+srv://szymon-zygadlinski:I60GoK50k5feQ1M0@simple-api.ooy31.mongodb.net/NewWaveDB?retryWrites=true&w=majority'
+  : 'mongodb://localhost:27017/NewWaveDB';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
-db.once('open', () => console.log('Successfully connected to the database!'));
+//db.once('open', () => console.log('Successfully connected to the database!'));
 
 db.on('error', err => console.log('Error:', err));
 
 const server = app.listen(process.env.PORT || 7000, () => {
-  console.log('Server is running on port 7000: http://localhost:7000');
+  //console.log('Server is running on port 7000: http://localhost:7000');
 });
 
 const io = socket(server);
 
 io.on('connection', () => console.log('New socket!'));
+
+module.exports = server;

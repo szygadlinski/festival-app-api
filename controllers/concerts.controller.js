@@ -23,6 +23,58 @@ exports.getSingle = async (req, res) => {
   }
 };
 
+exports.getByPerformer = async (req, res) => {
+  try {
+    const concerts = await Concert.find({ performer: req.params.performer });
+    if(!concerts || concerts.length === 0) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(concerts);
+    }
+  } catch(err) {
+    res.status(500).json({ message: err });
+  }
+};
+
+exports.getByGenre = async (req, res) => {
+  try {
+    const concerts = await Concert.find({ genre: req.params.genre });
+    if(!concerts || concerts.length === 0) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(concerts);
+    }
+  } catch(err) {
+    res.status(500).json({ message: err });
+  }
+};
+
+exports.getByPrice = async (req, res) => {
+  try {
+    const concerts = await Concert.find({ price: { $gte: req.params.price_min, $lte: req.params.price_max } })
+    if(!concerts || concerts.length === 0) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(concerts);
+    }
+  } catch(err) {
+    res.status(500).json({ message: err });
+  }
+};
+
+exports.getByDay = async (req, res) => {
+  try {
+    const concerts = await Concert.find({ day: req.params.day });
+    if(!concerts || concerts.length === 0) {
+      res.status(404).json({ message: 'Not found' });
+    } else {
+      res.json(concerts);
+    }
+  } catch(err) {
+    res.status(500).json({ message: err });
+  }
+};
+
 exports.post = async (req, res) => {
   try {
     const { performer, genre, price, day, image } = req.body;
