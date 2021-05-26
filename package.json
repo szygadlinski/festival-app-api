@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "build": "cd client && yarn install && yarn build",
-    "test": "set NODE_ENV=test && mocha \"./tests/**/*.test.js\"",
+    "test": "snyk test && set NODE_ENV=test && mocha \"./tests/**/*.test.js\"",
     "test:watch": "onchange \"./**/*.js\" -i -k -- yarn test"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "mocha": "^8.4.0",
     "mongo-sanitize": "1.0.1",
     "mongodb": "^3.6.6",
@@ -32,6 +33,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "snyk": "^1.613.0"
   }
 }
