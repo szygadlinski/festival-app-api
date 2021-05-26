@@ -38,7 +38,7 @@ app.use((req, res) => {
 });
 
 const dbURI = process.env.NODE_ENV === 'production' 
-  ? 'mongodb+srv://szymon-zygadlinski:I60GoK50k5feQ1M0@simple-api.ooy31.mongodb.net/NewWaveDB?retryWrites=true&w=majority'
+  ? `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@simple-api.ooy31.mongodb.net/NewWaveDB?retryWrites=true&w=majority`
   : 'mongodb://localhost:27017/NewWaveDB';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
