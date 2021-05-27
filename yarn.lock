@@ -3353,10 +3353,10 @@ mocha@^8.4.0:
     yargs-parser "20.2.4"
     yargs-unparser "2.0.0"
 
-mongo-sanitize@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mongo-sanitize/-/mongo-sanitize-1.0.1.tgz#23fb7eb33a97bbfc8219e6f41a889a4b96c4a850"
-  integrity sha512-y18QHyoQomBPdv48F0pJfBByZXql056fcj+5cPZt9MbpR+d1kKaGYQ3tiKE3bZLWDHBuMr5djhlxGO0vEMp2/A==
+mongo-sanitize@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mongo-sanitize/-/mongo-sanitize-1.1.0.tgz#01346b55f90716a42de3a1f957500a11c0752c36"
+  integrity sha512-6gB9AiJD+om2eZLxaPKIP5Q8P3Fr+s+17rVWso7hU0+MAzmIvIMlgTYuyvalDLTtE/p0gczcvJ8A3pbN1XmQ/A==
 
 mongodb@3.6.6, mongodb@^3.6.6:
   version "3.6.6"
