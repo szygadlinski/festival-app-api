@@ -12,8 +12,14 @@ class OrderTicketForm extends React.Component {
     order: {
       client: '',
       email: '',
-      day: 1,
       seat: '',
+      concert: {
+        performer: '',
+        genre: '',
+        price: 0,
+        day: 1,
+        image: '',      
+      },
     },
     isError: false,
   }
@@ -45,14 +51,20 @@ class OrderTicketForm extends React.Component {
 
     e.preventDefault();
 
-    if(order.client && order.email && order.day && order.seat) {
+    if(order.client && order.email && order.seat && order.concert) {
       await addSeat(order);
       this.setState({ 
         order: {
           client: '',
           email: '',
-          day: 1,
           seat: '',
+          concert: {
+            performer: '',
+            genre: '',
+            price: 0,
+            day: 1,
+            image: '',
+          },
         },
         isError: false,
       });
@@ -85,7 +97,7 @@ class OrderTicketForm extends React.Component {
             </FormGroup>
             <FormGroup>
               <Label for="clientDay">Select which day of festivals are you interested in:</Label>
-              <Input type="select" value={order.day} name="day" onChange={updateNumberField} id="exampleSelect">
+              <Input type="select" value={order.concert.day} name="day" onChange={updateNumberField} id="exampleSelect">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -101,7 +113,7 @@ class OrderTicketForm extends React.Component {
           </Col>
           <Col xs="12" md="6">
             <SeatChooser 
-              chosenDay={order.day}
+              chosenDay={order.concert.day}
               chosenSeat={order.seat} 
               updateSeat={updateSeat} />
           </Col>
