@@ -1,10 +1,17 @@
 const Seat = require('../models/seat.model');
+const Concert = require('../models/concert.model');
 
 exports.getAll = async (req, res) => {
   try {
+    console.log(await Seat.find());
+    console.log('concert', await Concert.find());
+    console.log('populate', await Seat.find().populate('concert'));
+
     res.json(await Seat.find().populate('concert'));
   }
   catch(err) {
+    console.log(err);
+
     res.status(500).json({ message: err });
   }
 };

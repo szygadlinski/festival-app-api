@@ -13,13 +13,7 @@ class OrderTicketForm extends React.Component {
       client: '',
       email: '',
       seat: '',
-      concert: {
-        performer: '',
-        genre: '',
-        price: 0,
-        day: 1,
-        image: '',      
-      },
+      concert: '',
     },
     isError: false,
   }
@@ -28,7 +22,7 @@ class OrderTicketForm extends React.Component {
     const { order } = this.state;
 
     e.preventDefault();
-    this.setState({ order: { ...order, seat: seatId }});
+    this.setState({ order: { ...order, seat: seatId }.populate('concert') });
   }
 
   updateTextField = ({ target }) => {
@@ -58,13 +52,7 @@ class OrderTicketForm extends React.Component {
           client: '',
           email: '',
           seat: '',
-          concert: {
-            performer: '',
-            genre: '',
-            price: 0,
-            day: 1,
-            image: '',
-          },
+          concert: '',
         },
         isError: false,
       });

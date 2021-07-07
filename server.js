@@ -45,12 +45,12 @@ const dbURI = process.env.NODE_ENV === 'production'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
-//db.once('open', () => console.log('Successfully connected to the database!'));
+db.once('open', () => console.log('Successfully connected to the database!'));
 
 db.on('error', err => console.log('Error:', err));
 
 const server = app.listen(process.env.PORT || 7000, () => {
-  //console.log('Server is running on port 7000: http://localhost:7000');
+  console.log('Server is running on port 7000: http://localhost:7000');
 });
 
 const io = socket(server);
